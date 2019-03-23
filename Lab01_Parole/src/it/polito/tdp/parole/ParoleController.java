@@ -28,30 +28,75 @@ public class ParoleController {
 
     @FXML // fx:id="txtParola"
     private TextField txtParola; // Value injected by FXMLLoader
+    
+    @FXML
+    private TextArea txtTime;
+
 
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
+    
+    @FXML
+    private Button btnCancella;
     
     @FXML
     private Button btnReset;
 
     @FXML // fx:id="btnInserisci"
     private Button btnInserisci; // Value injected by FXMLLoader
+    
+    @FXML
+    void doCancella(ActionEvent event) {
+    	
+    	elenco.elimina(this.txtParola.getText());
+    	this.txtParola.clear();
+    	
+    	String s ="";
+    	
+    	for(String st : elenco.getElenco()) {
+    		
+    		s+=st+"\n";
+    	}
+        
+    	this.txtResult.setText(s);
+    	
+    	this.txtTime.appendText(System.nanoTime()+"\n");
+
+    }
 
     @FXML
     void doInsert(ActionEvent event) {
-    	// TODO
+    	
+        elenco.addParola(this.txtParola.getText());
+    	this.txtParola.clear();
+    	
+    	String s ="";
+    	
+    	for(String st : elenco.getElenco()) {
+    		
+    		s+=st+"\n";
+    	}
+        
+    	this.txtResult.setText(s);
+    	
+    	this.txtTime.appendText(System.nanoTime()+"\n");
     }
     
     @FXML
     void doReset(ActionEvent event) {
-    	// TODO
+    	
+    	elenco.reset();
+    	this.txtResult.clear();
+    	
+    	this.txtTime.appendText(System.nanoTime()+"\n");
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert txtParola != null : "fx:id=\"txtParola\" was not injected: check your FXML file 'Parole.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Parole.fxml'.";
+        assert txtTime != null : "fx:id=\"txtTime\" was not injected: check your FXML file 'Parole.fxml'.";
+        assert btnCancella != null : "fx:id=\"btnCancella\" was not injected: check your FXML file 'Parole.fxml'.";
         assert btnInserisci != null : "fx:id=\"btnInserisci\" was not injected: check your FXML file 'Parole.fxml'.";
 
         elenco = new Parole() ;
