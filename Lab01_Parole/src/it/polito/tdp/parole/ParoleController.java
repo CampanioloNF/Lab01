@@ -18,7 +18,7 @@ import javafx.scene.control.TextField;
 
 public class ParoleController {
 	
-	Parole elenco ;
+	private Parole model ;
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -44,16 +44,26 @@ public class ParoleController {
 
     @FXML // fx:id="btnInserisci"
     private Button btnInserisci; // Value injected by FXMLLoader
+
+	
     
     @FXML
     void doCancella(ActionEvent event) {
     	
-    	elenco.elimina(this.txtParola.getText());
+    	
+    	if(this.txtParola.getText().trim().equals("") || this.model.isEmpty() ){
+		
+			this.txtTime.appendText("Seleziona una Parola!\n");
+		}
+    	
+		else{
+    	
+    	model.elimina(this.txtParola.getText());
     	this.txtParola.clear();
     	
     	String s ="";
     	
-    	for(String st : elenco.getElenco()) {
+    	for(String st : model.getElenco()) {
     		
     		s+=st+"\n";
     	}
@@ -61,18 +71,20 @@ public class ParoleController {
     	this.txtResult.setText(s);
     	
     	this.txtTime.appendText(System.nanoTime()+"\n");
+    	}
 
     }
 
     @FXML
     void doInsert(ActionEvent event) {
     	
-        elenco.addParola(this.txtParola.getText());
-    	this.txtParola.clear();
+        model.addParola(this.txtParola.getText());
+    	
+        this.txtParola.clear();
     	
     	String s ="";
     	
-    	for(String st : elenco.getElenco()) {
+    	for(String st : model.getElenco()) {
     		
     		s+=st+"\n";
     	}
@@ -85,7 +97,7 @@ public class ParoleController {
     @FXML
     void doReset(ActionEvent event) {
     	
-    	elenco.reset();
+    	model.reset();
     	this.txtResult.clear();
     	
     	this.txtTime.appendText(System.nanoTime()+"\n");
@@ -99,7 +111,12 @@ public class ParoleController {
         assert btnCancella != null : "fx:id=\"btnCancella\" was not injected: check your FXML file 'Parole.fxml'.";
         assert btnInserisci != null : "fx:id=\"btnInserisci\" was not injected: check your FXML file 'Parole.fxml'.";
 
-        elenco = new Parole() ;
+       // model = new Parole() ;
         
     }
+
+	public void setModel(Parole model) {
+		this.model=model;
+		
+	}
 }

@@ -16,6 +16,7 @@ public class Parole {
 	
 	public void addParola(String p) {
 		
+		
 		String c = p;
 		
 		if(!c.trim().equals(""))
@@ -41,5 +42,9 @@ public class Parole {
 		
 		if(!c.trim().equals(""))
 		    lista.remove(p);
+	}
+	
+	public boolean isEmpty() {
+		return this.lista.isEmpty();
 	}
 }

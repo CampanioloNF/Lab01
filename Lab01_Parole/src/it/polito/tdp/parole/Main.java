@@ -1,5 +1,6 @@
 package it.polito.tdp.parole;
 	
+import it.polito.tdp.parole.model.Parole;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -11,11 +12,21 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Parole.fxml"));
+			
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Parole.fxml"));
+			BorderPane root = loader.load();
+			
+			ParoleController controller = loader.getController();
+			
+			Parole model = new Parole();
+			controller.setModel(model);
+			
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
+			
 			primaryStage.show();
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
